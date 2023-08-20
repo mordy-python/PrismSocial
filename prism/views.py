@@ -180,14 +180,7 @@ def like(rayId):
 
 @views.route("/admin")
 def admin():
-    if not current_user.is_admin:
-        flash("That isn't allowed", "danger")
-        return redirect(request.referrer)
-    users = User.query.all()
-    rays = Ray.query.all()
-    return render_template(
-        "admin.html", users=users, rays=rays, title="Admin", user=current_user
-    )
+    return redirect(url_for("admin.home"))
 
 
 @views.route("/login")

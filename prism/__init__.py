@@ -31,9 +31,11 @@ def create_app():
     login_manager.init_app(app)
 
     from .views import views
+    from .admin import admin
     from .auth import auth
 
     app.register_blueprint(views, url_prefix="/")
+    app.register_blueprint(admin, url_prefix="/admin")
     app.register_blueprint(auth, url_prefix="/auth")
 
     from .models import User, Ray
@@ -43,6 +45,10 @@ def create_app():
     @login_manager.user_loader
     def load_user(id):
         return User.query.get(int(id))
+
+    @app.template_filter("last_few")
+    def last_few(value):
+        return value[-5:]
 
     return app
 
