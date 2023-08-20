@@ -15,6 +15,7 @@ class Ray(db.Model):
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
+    is_admin = db.Column(db.Boolean, default=False)
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(300))
     username = db.Column(db.String(150))

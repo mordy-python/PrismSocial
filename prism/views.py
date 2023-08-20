@@ -178,8 +178,7 @@ def like(rayId):
 
 @views.route("/admin")
 def admin():
-    admins = [1, 2]
-    if current_user.id not in admins:
+    if not current_user.is_admin:
         flash("That isn't allowed", "danger")
         return redirect(request.referrer)
     users = User.query.all()
