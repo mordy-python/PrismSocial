@@ -23,6 +23,7 @@ class User(db.Model, UserMixin):
     pronouns = db.Column(db.String(150), default="")
     rays = db.relationship("Ray", back_populates="user")
     likes = db.relationship("Like", backref="user")
+    bio = db.Column(db.String(1000))
 
 
 class Like(db.Model):
