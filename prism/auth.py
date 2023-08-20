@@ -79,7 +79,7 @@ def signup():
             new_user = User(
                 email=email,
                 username=username,
-                password=generate_password_hash(pass1, method="scrypt"),
+                password=generate_password_hash(pass1),
                 avatar=gen_avatar(username),
             )
             db.session.add(new_user)
