@@ -10,6 +10,13 @@
     <h3>{{user_profile.username}}</h3>
     {% endif %}
     <small class="text-muted">{{user_profile.pronouns}}</small>
+    <pre class="alert alert-secondary mt-2" style="font: inherit;">
+        {% if user_profile.bio %}
+        {{user_profile.bio}}
+        {% else %}
+        {{user_profile.username}} has no bio 😔
+        {% endif %}
+    </pre>
 </div>
 <div id="main-container">{% include 'components/ray.html' %}</div>
 {% endblock content %}
