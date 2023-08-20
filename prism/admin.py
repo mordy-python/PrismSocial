@@ -1,11 +1,12 @@
 from flask import Blueprint, render_template, flash, redirect, url_for
 from .models import User, Ray
-from flask_login import current_user
+from flask_login import current_user, login_required
 
 admin = Blueprint("admin", __name__)
 
 
 @admin.route("/")
+@login_required
 def home():
     if not current_user.is_admin:
         flash("That isn't allowed", "danger")
