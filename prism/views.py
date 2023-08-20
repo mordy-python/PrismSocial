@@ -98,6 +98,7 @@ def update_info():
     email = request.form.get("email")
     username = request.form.get("username")
     pronouns = request.form.get("pronouns")
+    bio = request.form.get("bio")
 
     if not email or not username:
         flash("Email and username fields cannot be empty", "danger")
@@ -115,6 +116,7 @@ def update_info():
         current_user.username = username
         current_user.email = email
         current_user.pronouns = pronouns
+        current_user.bio = bio.strip()
         db.session.commit()
 
     flash("Updated information successfully", "success")

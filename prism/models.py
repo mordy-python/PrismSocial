@@ -6,7 +6,7 @@ from sqlalchemy.sql import func
 class Ray(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     likes = db.Column(db.Integer, default=0)
-    content = db.Column(db.String(10000))
+    content = db.Column(db.Text(10000))
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     user = db.relationship("User", back_populates="rays")
@@ -23,7 +23,7 @@ class User(db.Model, UserMixin):
     pronouns = db.Column(db.String(150), default="")
     rays = db.relationship("Ray", back_populates="user")
     likes = db.relationship("Like", backref="user")
-    bio = db.Column(db.String(1000))
+    bio = db.Column(db.Text(1000))
 
 
 class Like(db.Model):
