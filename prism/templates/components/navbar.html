@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand prism" href="{{ url_for('views.index') }}">Prism</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+                {% if not user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('auth.signup') }}">Register</a>
+                </li>
+                {% else %}
+            </ul>
+            <a class="d-flex nav-item nav-link mb-sm-2 mb-md-0" style="margin-right: 10px !important;"
+                href="{{ url_for('views.profile', id=user.id) }}">Profile</a>
+            <a class="d-flex nav-item nav-link" href="{{ url_for('views.account') }}"><img src="{{user.avatar}}"
+                    style="width: 40px;height: auto;border-radius: 50%;"></a>
+            {% endif %}
+        </div>
+    </div>
+</nav>

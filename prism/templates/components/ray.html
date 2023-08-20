@@ -1,0 +1,44 @@
+{% for ray in rays|reverse %}
+<div class="mb-3 alert alert-secondary" role="alert" id="rays">
+    <div
+        style="display: flex;flex-direction: row;justify-content: space-between;border-bottom: 1px solid #000;margin-bottom: 5px;">
+        <p class="d-flex align-items-center" style="gap: 5px;">
+            <img src="{{ray.user.avatar}}" style="width: 40px;height: auto;border-radius: 50%;" class="">
+            <strong>
+                <a class="text-info" href="{{ url_for('views.profile', id=ray.user.id) }}"
+                    style="text-decoration: none;">@{{ray.user.username}}</a>
+            </strong>
+            <small class="text-muted">{{ray.user.pronouns}}</small>
+        </p>
+        <small class="d-none d-lg-inline">Posted on {{ray.date.strftime('%m-%d-%Y') }} at
+            {{ray.date.strftime('%H:%M')}}</small>
+    </div>
+    <p style="padding: 0;">{{ray.content}}</p>
+
+    <div class="d-flex flex-row justify-content-between align-items-center">
+        {% if ray.user_id == user.id %}
+        <button class="btn text-danger" hx-delete="{{ url_for('views.delRey', id=ray.id) }}"
+            hx-target="#main-container"><span class="material-symbols-outlined">delete</span></button>
+        {% else %}
+        <button class="btn text-danger" style="opacity: 0;cursor: default;" aria-hidden="true">
+            <span class="material-symbols-outlined">
+                delete
+            </span>
+        </button>
+        {% endif %}
+        {% if user.id in ray.likes|map(attribute="user_id")|list %}
+        <button hx-post="{{ url_for('views.like', rayId=ray.id) }}" hx-swap="outerHTML"
+            class="btn text-success d-flex align-items-center"><span
+                style="font-size: 20px;">{{ray.likes|length}}</span>&nbsp;<span class="material-icons">
+                favorite
+            </span></button>
+        {% else %}
+        <button hx-post="{{ url_for('views.like', rayId=ray.id) }}" hx-swap="outerHTML"
+            class="btn text-success d-flex align-items-center"><span
+                style="font-size: 20px;">{{ray.likes|length}}</span>&nbsp;<span class="material-icons">
+                favorite_outline
+            </span></button>
+        {% endif %}
+    </div>
+</div>
+{% endfor %}

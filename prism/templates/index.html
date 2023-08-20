@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if not user.is_authenticated %}
+<div class="alert alert-info mt-3" role="alert">
+    <div style="display: flex;flex-direction: row;align-items: center;justify-content: space-between;">
+        You are not logged in!
+        <div style="display: flex;justify-content: center;gap:5px;">
+            <a class="btn btn-info" href="{{ url_for('auth.login') }}">Log In</a>
+            <a class="btn btn-outline-info d-none d-lg-block" href="{{ url_for('auth.signup') }}">Create Account</a>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="container text-center">
+    <div class="row">
+        <div class="col-lg-8 col-lg-8 col-sm-4 mb-5">
+
+            {% if user.is_authenticated %}
+            <!-- POST BOX FOR MOBILE -->
+            <div class="d-lg-none d-md-block d-sm-block col-lg-4 col-md-4 alert alert-dark mt-2">
+                <div class="mb-4">
+                    <h2>Share A New Ray</h2>
+                </div>
+                <form hx-post="{{ url_for('views.post_ray') }}" hx-target="#main-container"
+                    hx-on::after-request="this.reset()">
+                    <textarea name="ray" id="ray" class="form-control" style="resize: none;" required></textarea>
+                    <button type="submit" class="btn btn-info" style="width: 100%;margin: 15px 0;">Share</button>
+                </form>
+            </div>
+            {% endif %}
+
+            <div class="alert alert-dark mt-2">
+                <div class="mb-3">
+                    <h1>All Rays</h1>
+                </div>
+                <div id="main-container" hx-get="{{ url_for('views.get_rays') }}" hx-trigger="load">Loading...</div>
+            </div>
+        </div>
+        <div class="d-none d-lg-block col-lg-4 col-md-4 mt-2">
+            {% if user.is_authenticated %}
+            <!-- POST BOX FOR WEB -->
+            <div class="alert alert-dark">
+                <div class="mb-4">
+                    <h2>Share A New Ray</h2>
+                </div>
+                <form hx-post="{{ url_for('views.post_ray') }}" hx-target="#main-container"
+                    hx-on::after-request="this.reset()">
+                    <textarea name="ray" id="ray" class="form-control" style="resize: none;" rows="10"
+                        required></textarea>
+                    <button type="submit" class="btn btn-info" style="width: 100%;margin-top: 15px;">Share</button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
