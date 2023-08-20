@@ -4,8 +4,13 @@ from pathlib import Path
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
 
 base_dir = Path(__file__).parent.resolve()
+
+load_dotenv(base_dir.parent.resolve() / ".env")
 
 db = SQLAlchemy()
 DB_NAME = "database.sqlite"
@@ -13,8 +18,11 @@ DB_NAME = "database.sqlite"
 
 def create_app():
     app = Flask(__name__)
-    app.config["SECRET_KEY"] = "CHANGE-THIS"
-    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///" + str(base_dir / DB_NAME)
+    app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
+
+    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///" + str(
+        base_dir / "db" / DB_NAME
+    )
     db.init_app(app)
     migrate = Migrate(app, db)
 
