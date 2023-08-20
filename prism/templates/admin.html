@@ -5,4 +5,19 @@
     <li>There are {{users|length}} total users</li>
     <li>There are {{rays|length}} total rays</li>
 </ul>
+<div class="alert alert-dark">
+    <h4>Recent Signups</h4>
+    <hr>
+    {% set us = users|last_few|reverse %}
+    {% for u in us %}
+    <p class="d-flex align-items-center" style="gap: 5px;">
+        <img src="{{u.avatar}}" style="width: 40px;height: auto;border-radius: 50%;" class="">
+        <strong>
+            <a class="text-info" href="{{ url_for('views.profile', id=u.id) }}"
+                style="text-decoration: none;">@{{u.username}}</a>
+        </strong>
+        <small class="text-muted">{{u.pronouns}}</small>
+    </p>
+    {% endfor %}
+</div>
 {% endblock content %}
