@@ -4,7 +4,11 @@
 <div class="d-flex flex-column align-items-center mb-2">
     <img class="rounded-circle" src="{{user_profile.avatar}}" width="100" alt="{{user_profile.usernames}}'s avatar">
     <div class="m-1"></div>
+    {% if user.is_admin %}
+    <h3>{{user_profile.username}} <small class="text-muted">Admin</small></h3>
+    {% else %}
     <h3>{{user_profile.username}}</h3>
+    {% endif %}
     <small class="text-muted">{{user_profile.pronouns}}</small>
 </div>
 <div id="main-container">{% include 'components/ray.html' %}</div>
